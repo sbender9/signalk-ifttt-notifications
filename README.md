@@ -8,7 +8,7 @@ npm install signalk-ifttt-notifications
 ```
 
 Go to IFTTT Applets section and create a new Applet. For "this", choose the Maker service. Then click on the "Receive a web request" box.
-Enter SignalKNotification for the event name. Then choose something to do for "that".
+Enter the notification name for the event name.For example, "notifications.environment.wind.speedApparent". Then choose something to do for "that".
 
 Now go to the IFTT Services section and click on Maker, then go to settings. Get your private key. 
 It's the string in after "https://maker.ifttt.com/use/"
