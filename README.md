@@ -4,6 +4,7 @@ Trigger ifttt actions when alarms go off
 Install with
 
 ```
+cd /usr/local/src/signalk-server-node
 npm install signalk-ifttt-notifications
 ```
 
