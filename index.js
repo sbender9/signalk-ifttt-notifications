@@ -95,7 +95,7 @@ module.exports = function(app) {
 
   function send_to_iftt(state, message, path)
   {
-    var eventName = "SignalKNotification"
+    var eventName = path
     
     var url = "https://maker.ifttt.com/trigger/" + eventName + "/with/key/" + privateKey
 
@@ -114,7 +114,7 @@ module.exports = function(app) {
     }, function(error, response, body)
             {
               if (!error && response.statusCode === 200) {
-                console.log(body)
+                debug(body)
               }
               else {
                 console.log("error: " + error)
