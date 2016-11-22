@@ -1,6 +1,6 @@
 {
   "name": "signalk-ifttt-notifications",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "signalk-node-server plugin that sends SignalK notifications to a IFFTT Maker channek",
   "main": "index.js",
   "scripts": {
