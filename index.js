@@ -73,14 +73,22 @@ module.exports = function(app) {
       update.values.forEach(function(value) {
         if ( value.value != null
              && typeof value.value.message != 'undefined'
-             && value.value.message != null )
+             && value.value.message != null
+             && value.value.state != 'undefined'
+             && value.value.state != 'normal' )
         {
           if ( last_states[value.path] == null
                || last_states[value.path] != value.value.state )
           {
             last_states[value.path] = value.value.state
             debug("message:" + value.value.message)
-            send_to_iftt(value.value.state, value.value.message, value.path)
+            
+            send_to_iftt("SignalKNotification", value.value.state, value.value.message, value.path)
+            send_to_iftt("SignalKNotification." + value.value.state, value.value.state, value.value.message, value.path)            
+            send_to_iftt(value.path, value.value.state, value.value.message,
+                         value.path)
+            send_to_iftt(value.path + ".state." + value.value.state, value.value.state,
+                         value.value.message, value.path)            
           }
         }
         else if ( last_states[value.path] )
@@ -93,12 +101,9 @@ module.exports = function(app) {
 
 
 
-  function send_to_iftt(state, message, path)
+  function send_to_iftt(eventName, state, message, path)
   {
-    var eventName = path
-    
     var url = "https://maker.ifttt.com/trigger/" + eventName + "/with/key/" + privateKey
-
     debug("url: " + url)
     json = { "message": message, "state": state, "path": path }
 
@@ -125,9 +130,6 @@ module.exports = function(app) {
            )
   }
 
-
-
-  
   plugin.id = "iftt-notifications"
   plugin.name = "IFTT Notifications"
   plugin.description = "Plugin that sends SignalK notifications to a IFFTT Maker channek"
