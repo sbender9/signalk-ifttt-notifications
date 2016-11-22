@@ -17,3 +17,11 @@ It's the string after "https://maker.ifttt.com/use/"
 
 Now start your server and go to <http://localhost:3000/plugins/configure>. Make sure the plugin is Active and enter your IFTTT private key.
 
+There are a few options for setting the event name on the IFTTT side. For each notification, four events are sent to IFTTT. This way you can setup generic applets to handle things like any 'emergency' notification. And you can also setup specific applets for specific notifications and/or states.
+
+The four events:
+
+1. "SignalKNotification" - used to have an action for any notification
+2. "SignalKNotification.{state}" -  used to have an action for any notification with a specific state. For example, "SignalKNotification.emergency". (states are "warn", "alert", "alarm" and "emergency")
+3. "notifications.{path}" - used to have an action for a specific notification in any state. For example: "notifications.environment.depth.belowSurface"
+4. "notifications.{path}.{state}" - used to have an action for a specific notification in a specific state. For example: "notifications.environment.depth.belowSurface.warn"
