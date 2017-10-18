@@ -1,4 +1,6 @@
 # signalk-ifttt-notifications
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/sbender9/signalk-ifttt-notifications.svg)](https://greenkeeper.io/)
 Trigger ifttt actions when alarms go off
 
 Install with
