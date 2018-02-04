@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-const debug = require('debug')('signalk:iftt-notifications')
 const util = require('util')
 const fs = require('fs')
 const _ = require('lodash')
@@ -26,7 +25,6 @@ module.exports = function(app) {
   var last_states = {}
   
   plugin.start = function(props) {
-    debug("starting...")
     privateKey = props.privateKey
 
     command = {
@@ -40,13 +38,11 @@ module.exports = function(app) {
     app.subscriptionmanager.subscribe(command, unsubscribes, subscription_error, got_delta)
     //devices = readJson(app, "devices" , plugin.id)
     //send_push(app, devices[Object.keys(devices)[0]], "Hellow", "some.path")
-    
-    debug("started")
   };
 
   function subscription_error(err)
   {
-    debug("error: " + err)
+    app.error("error: " + err)
   }
 
   function got_delta(notification)
@@ -55,18 +51,14 @@ module.exports = function(app) {
   }
 
   plugin.stop = function() {
-    debug("stopping")
-
     unsubscribes.forEach(function(func) { func() })
     unsubscribes = []
-    
-    debug("stopped")
   }
 
   function handleNotificationDelta(notification)
   {
-    debug("notification: " +
-          util.inspect(notification, {showHidden: false, depth: 6}))
+    app.debug("notification: " +
+              util.inspect(notification, {showHidden: false, depth: 6}))
     
     
     notification.updates.forEach(function(update) {
@@ -81,7 +73,7 @@ module.exports = function(app) {
                || last_states[value.path] != value.value.state )
           {
             last_states[value.path] = value.value.state
-            debug("message:" + value.value.message)
+            app.debug("message:" + value.value.message)
             
             send_to_iftt("SignalKNotification", value.value.state, value.value.message, value.path)
             send_to_iftt("SignalKNotification." + value.value.state, value.value.state, value.value.message, value.path)            
@@ -104,10 +96,10 @@ module.exports = function(app) {
   function send_to_iftt(eventName, state, message, path)
   {
     var url = "https://maker.ifttt.com/trigger/" + eventName + "/with/key/" + privateKey
-    debug("url: " + url)
+    app.debug("url: " + url)
     json = { "message": message, "state": state, "path": path }
 
-    debug("json: " + JSON.stringify(json))
+    app.debug("json: " + JSON.stringify(json))
     request({
       url: url,
       method: "POST",

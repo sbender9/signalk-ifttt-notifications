@@ -4,7 +4,9 @@
   "description": "signalk-node-server plugin that sends SignalK notifications to a IFFTT Maker channek",
   "main": "index.js",
   "scripts": {
-    "test": "$NODE $npm_package_main"
+    "test": "$NODE $npm_package_main",
+    "changelog": "github-changes -o sbender9 -r signalk-ifttt-notifications -a --only-pulls --use-commit-body --data=pulls  --tag-name=v$npm_package_version",
+    "release": "git tag -d v$npm_package_version; (npm run changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog'); git tag v$npm_package_version && git push --tags && git push"
   },
   "keywords": [
     "signalk-node-server-plugin"
@@ -16,8 +18,11 @@
     "lodash": "^4.17.4",
     "request": "^2.79"
   },
-   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/sbender9/signalk-ifttt-notifications"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sbender9/signalk-ifttt-notifications"
+  },
+  "devDependencies": {
+    "github-changes": "^1.1.2"
   }
 }
