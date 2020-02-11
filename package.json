@@ -16,7 +16,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "lodash": "^4.17.4",
-    "request": "^2.79"
+    "request": "^2.88.2"
   },
   "repository": {
     "type": "git",
